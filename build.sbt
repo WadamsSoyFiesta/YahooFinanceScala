@@ -1,5 +1,5 @@
 lazy val commonSettings = Seq(
-  version := "0.1",
+  version := "0.2",
   organization := "openquant",
   name := "YahooFinanceScala",
   scalaVersion := "2.11.7",

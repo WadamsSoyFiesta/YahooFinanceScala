@@ -1,21 +1,28 @@
-package openquant.yahoofinance
+package openquant.yahoofinance.impl
 
 import java.time.format.DateTimeFormatter
 import java.time.{LocalDate, ZoneId, ZonedDateTime}
 
 import com.github.tototoshi.csv._
+import openquant.yahoofinance.Quote
 
 import scala.io.Source
 
 /**
-  * Parses CSV response from Yahoo Finance into structured data
+  * Parses historical data in CSV format from Yahoo Finance into [[Quote]]
   */
-class YahooCSV {
+class QuoteParser {
   private[this] val df = DateTimeFormatter.ofPattern("yyyy-MM-dd")
   private[this] val zoneId = ZoneId.of("America/New_York")
-  private def parseDate(date: String): ZonedDateTime = {
-    LocalDate.parse(date, df).atStartOfDay().atZone(zoneId)
+
+  def parse(content: String): Vector[Quote] = {
+    val csvReader = CSVReader.open(Source.fromString(content))
+    val quotes: Vector[Quote] = csvReader.toStream.drop(1).map { fields ⇒
+      parseCSVLine(fields.toVector)
+    }.toVector
+    quotes
   }
+
   private def parseCSVLine(field: Vector[String]): Quote = {
     require(field.length >= 7)
     Quote(
@@ -29,15 +36,11 @@ class YahooCSV {
     )
   }
 
-  def parse(content: String): Vector[Quote] = {
-    val csvReader = CSVReader.open(Source.fromString(content))
-    val quotes = csvReader.toStream.drop(1).map { fields ⇒
-      parseCSVLine(fields.toVector)
-    }.toVector
-    quotes
+  private def parseDate(date: String): ZonedDateTime = {
+    LocalDate.parse(date, df).atStartOfDay().atZone(zoneId)
   }
 }
 
-object YahooCSV {
-  def apply() = new YahooCSV
+object QuoteParser {
+  def apply() = new QuoteParser
 }
