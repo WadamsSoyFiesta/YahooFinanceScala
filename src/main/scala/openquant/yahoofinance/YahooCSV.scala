@@ -7,6 +7,9 @@ import com.github.tototoshi.csv._
 
 import scala.io.Source
 
+/**
+  * Parses CSV response from Yahoo Finance into structured data
+  */
 class YahooCSV {
   private[this] val df = DateTimeFormatter.ofPattern("yyyy-MM-dd")
   private[this] val zoneId = ZoneId.of("America/New_York")
