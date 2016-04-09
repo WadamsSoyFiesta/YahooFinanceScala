@@ -46,10 +46,10 @@ class YahooFinance(implicit actorSystem: ActorSystem, config: Config = ConfigFac
     * @param symbol for example MSFT, IBM, etc.
     * @param from initial time
     * @param to end time
-    * @param resolution quote [[Resolution]], default is Day
+    * @param resolution quotes [[Resolution]], default is Day
     * @return future quotes or a failed future on error
     */
-  def quote(
+  def quotes(
     symbol: String,
     from: ZonedDateTime,
     to: ZonedDateTime = ZonedDateTime.now(),
@@ -76,4 +76,5 @@ class YahooFinance(implicit actorSystem: ActorSystem, config: Config = ConfigFac
     val res = Http().singleRequest(request)
     res.flatMap(handleResponse)
   }
+
 }

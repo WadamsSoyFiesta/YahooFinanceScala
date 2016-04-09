@@ -13,12 +13,12 @@ import scala.concurrent.duration.Duration
 class YahooFinanceSpec extends TestKit(ActorSystem()) with SpecificationLike with Matchers with Logging {
   "get quotes" in {
     val yahooFinance = new YahooFinance()
-    val res = Await.result(yahooFinance.quote("MSFT", ZonedDateTime.now().minusDays(5)), Duration.Inf)
+    val res = Await.result(yahooFinance.quotes("MSFT", ZonedDateTime.now().minusDays(5)), Duration.Inf)
     res.length must be_>=(3)
     res.length must be_<=(5)
   }
   "non-existent symbol" in {
     val yahooFinance = new YahooFinance()
-    Await.result(yahooFinance.quote("qwertyasdf", ZonedDateTime.now().minusDays(5)), Duration.Inf) must throwA[RuntimeException]
+    Await.result(yahooFinance.quotes("qwertyasdf", ZonedDateTime.now().minusDays(5)), Duration.Inf) must throwA[RuntimeException]
   }
 }
