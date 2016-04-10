@@ -8,6 +8,17 @@ title="Donate to this project using Paypal"><img
 src="https://img.shields.io/badge/paypal-donate-yellow.svg" alt="PayPal donate button" /></a></span>
 
 
+## Add YahooFinanceScala to your build.sbt file
+
+
+```scala
+libraryDependencies ++= Seq(
+ "com.larroy.openquant" %% "yahoofinancescala" % "0.2"
+)
+```
+
+[Check it out in Central](http://search.maven.org/#artifactdetails%7Ccom.larroy.openquant%7Cyahoofinancescala_2.11%7C0.2%7Cjar)
+
 ## Usage
 
 
