@@ -34,7 +34,7 @@ import scala.concurrent.Await
 implicit val system = ActorSystem()
 
 val yahooFinance = new YahooFinance()
-val quotes: IndexedSeq[Quote] = Await.result(yahooFinance.quote("MSFT", ZonedDateTime.now().minusDays(5)), Duration.Inf)
+val quotes: IndexedSeq[Quote] = Await.result(yahooFinance.quotes("MSFT", Some(ZonedDateTime.now().minusDays(5))), Duration.Inf)
 // Quote(2016-04-01T00:00-04:00[America/New_York],55.049999,55.57,55.610001,54.57,24298600,55.57)
 val fundamentals: IndexedSeq[Fundamentals] = Await.result(yahooFinance.fundamentals("IBM"), Duration.Inf)
 // fundamentals: IndexedSeq[openquant.yahoofinance.Fundamentals] = Vector(Fundamentals(true,IBM,International Business Machines))

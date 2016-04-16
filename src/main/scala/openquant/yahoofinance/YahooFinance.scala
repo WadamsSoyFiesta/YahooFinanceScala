@@ -44,23 +44,32 @@ class YahooFinance(implicit actorSystem: ActorSystem, config: Config = ConfigFac
     */
   def quotes(
     symbol: String,
-    from: ZonedDateTime,
-    to: ZonedDateTime = ZonedDateTime.now(),
+    from: Option[ZonedDateTime] = None,
+    to: Option[ZonedDateTime] = None,
     resolution: Resolution.Enum = Resolution.Day): Future[IndexedSeq[Quote]] = {
     // s: symbol
     // abc: from
     // def: to
     // g: resolution
-    val params: Vector[(String, String)] = Vector(
+    var params: Vector[(String, String)] = Vector(
       "s" → symbol,
-      "a" → (from.get(ChronoField.MONTH_OF_YEAR) - 1).toString,
-      "b" → from.get(ChronoField.DAY_OF_MONTH).toString,
-      "c" → from.get(ChronoField.YEAR).toString,
-      "d" → (to.get(ChronoField.MONTH_OF_YEAR) - 1).toString,
-      "e" → to.get(ChronoField.DAY_OF_MONTH).toString,
-      "f" → to.get(ChronoField.YEAR).toString,
       "g" → Resolution.parameter(resolution)
     )
+    from.foreach { from ⇒
+      params = params ++ Vector(
+        "a" → (from.get(ChronoField.MONTH_OF_YEAR) - 1).toString,
+        "b" → from.get(ChronoField.DAY_OF_MONTH).toString,
+        "c" → from.get(ChronoField.YEAR).toString
+      )
+    }
+    to.foreach { to ⇒
+      params = params ++ Vector(
+        "d" → (to.get(ChronoField.MONTH_OF_YEAR) - 1).toString,
+        "e" → to.get(ChronoField.DAY_OF_MONTH).toString,
+        "f" → to.get(ChronoField.YEAR).toString
+      )
+    }
+
     val query = Query(params: _*)
 
     val uri = Uri(scheme = QuotesScheme).withQuery(query).withHost(QuotesHost).withPath(Uri.Path(QuotesPath))
