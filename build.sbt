@@ -57,9 +57,9 @@ lazy val commonSettings = Seq(
 
 lazy val commonDependencies = Seq(
   "org.slf4j" % "jcl-over-slf4j" % "1.7.7",
-  "commons-logging" % "commons-logging" % "99-empty",
+  "commons-logging" % "commons-logging" % "1.2",
   "ch.qos.logback" % "logback-classic" % "1.1.3",
-  "com.iheart" %% "ficus" % "1.2.3",
+  "net.ceedubs" %% "ficus" % "1.1.2",
   "com.typesafe.akka" %% "akka-stream" % "2.4.3",
   //"com.typesafe.akka" %% "akka-http-core" % "2.4-SNAPSHOT",
   "com.typesafe.akka" %% "akka-http-core" % "2.4.3",
