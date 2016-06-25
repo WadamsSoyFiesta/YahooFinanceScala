@@ -37,37 +37,40 @@ class YahooFinance(implicit actorSystem: ActorSystem, config: Config = ConfigFac
     * Get quotes from Yahoo Finance
     *
     * @param symbol     for example MSFT, IBM, etc.
-    * @param from       initial time
-    * @param to         end time
+    * @param fromOpt       initial time
+    * @param toOpt         end time
     * @param resolution quotes [[Resolution]], default is Day
     * @return future quotes or a failed future on error
     */
   def quotes(
     symbol: String,
-    from: Option[ZonedDateTime] = None,
-    to: Option[ZonedDateTime] = None,
+    fromOpt: Option[ZonedDateTime] = None,
+    toOpt: Option[ZonedDateTime] = None,
     resolution: Resolution.Enum = Resolution.Day): Future[IndexedSeq[Quote]] = {
     // s: symbol
     // abc: from
     // def: to
     // g: resolution
-    var params: Vector[(String, String)] = Vector(
-      "s" → symbol,
-      "g" → Resolution.parameter(resolution)
-    )
-    from.foreach { from ⇒
-      params = params ++ Vector(
-        "a" → (from.get(ChronoField.MONTH_OF_YEAR) - 1).toString,
-        "b" → from.get(ChronoField.DAY_OF_MONTH).toString,
-        "c" → from.get(ChronoField.YEAR).toString
-      )
-    }
-    to.foreach { to ⇒
-      params = params ++ Vector(
-        "d" → (to.get(ChronoField.MONTH_OF_YEAR) - 1).toString,
-        "e" → to.get(ChronoField.DAY_OF_MONTH).toString,
-        "f" → to.get(ChronoField.YEAR).toString
-      )
+
+    val params = {
+      Vector(
+        "s" → symbol,
+        "g" → Resolution.parameter(resolution)
+      ) ++
+      fromOpt.toList.flatMap { from =>
+        Vector(
+          "a" → (from.get(ChronoField.MONTH_OF_YEAR) - 1).toString,
+          "b" → from.get(ChronoField.DAY_OF_MONTH).toString,
+          "c" → from.get(ChronoField.YEAR).toString
+        )
+      } ++
+      toOpt.toList.flatMap { to =>
+        Vector(
+          "d" → (to.get(ChronoField.MONTH_OF_YEAR) - 1).toString,
+          "e" → to.get(ChronoField.DAY_OF_MONTH).toString,
+          "f" → to.get(ChronoField.YEAR).toString
+        )
+      }
     }
 
     val query = Query(params: _*)
