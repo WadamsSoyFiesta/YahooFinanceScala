@@ -2,7 +2,7 @@ lazy val commonSettings = Seq(
   version := "0.3",
   organization := "com.larroy.openquant",
   name := "YahooFinanceScala",
-  scalaVersion := "2.11.7",
+  scalaVersion := "2.11.8",
   scalacOptions := Seq(
     "-target:jvm-1.8",
     "-unchecked",
