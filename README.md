@@ -2,6 +2,8 @@
 A non-blocking Yahoo Finance Scala client based on Akka streams.
 
 [![Twitter Follow](https://img.shields.io/twitter/follow/openquantfin.svg?style=social)](https://twitter.com/intent/user?screen_name=openquantfin)
+[![Build Status](https://travis-ci.org/openquant/YahooFinanceScala.svg?branch=master)](https://travis-ci.org/openquant/YahooFinanceScala)
+
 <span class="badge-paypal"><a
 href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6SLKKT7NJUVM6"
 title="Donate to this project using Paypal"><img
