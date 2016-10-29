@@ -16,11 +16,11 @@ src="https://img.shields.io/badge/paypal-donate-yellow.svg" alt="PayPal donate b
 
 ```scala
 libraryDependencies ++= Seq(
- "com.larroy.openquant" %% "yahoofinancescala" % "0.2"
+ "com.larroy.openquant" %% "yahoofinancescala" % "0.3"
 )
 ```
 
-[Check it out in Central](http://search.maven.org/#artifactdetails%7Ccom.larroy.openquant%7Cyahoofinancescala_2.11%7C0.2%7Cjar)
+[Check it out in Central](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.larroy.openquant%22)
 
 ## Usage
 
